@@ -1,0 +1,27 @@
+.body{
+    font-family: 'Dosis', sans-serif;
+}
+.tl_box{
+
+}
+#left_box{
+  text-align: center;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+#right_box{
+  text-align: left;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+#education{
+  margin-top: 50px;
+  text-align: center;
+  background-color: #fff;
+  border-radius: 10px;
+}
+#home_back{
+  background-color: #212121;
+}
