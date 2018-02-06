@@ -55,7 +55,7 @@ Like every other Machine Learning task in the task of Question Answering we want
 
 *This  metric  measures the average overlap between the prediction and ground  truth  answer.   We  treat  the  prediction  and ground truth as bags of tokens,  and compute their F1. We take the maximum F1 over all of the ground truth answers for a given question, and then average over all of the questions.*
 
-![precision_recall](../assests/p_2_f1.png)
+![precision_recall](assests/p_2_f1.png)
 $$F1=2*\frac{precision * recall}{precision + recall}$$
 
 ### Performance 
