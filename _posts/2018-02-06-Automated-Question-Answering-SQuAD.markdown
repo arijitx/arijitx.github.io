@@ -4,6 +4,7 @@ title:  "Automated Question Answering and SQuAD"
 date:   2018-02-06 17:40:25 +0530
 categories: QA,SquaD
 ---
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> 
 
 # Why Question Answering ?
 
