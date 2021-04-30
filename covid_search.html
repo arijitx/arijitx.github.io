@@ -56,8 +56,16 @@
                             res += '<tr><td>'+val['tid']+'</td>';
                             res += '<td>'+val['time']+'</td>';
                             res += '<td>'+val['text']+'</td>';
+                            
                             res += '<td>'+val['help_type']+'</td>';
-                            res += '<td>'+val['help_cat']+'</td>';
+
+                            if(val['help_cat'] == 'NEED_HELP'){
+                                res += '<td><span class="badge badge-danger">SOS</span></td>';
+                            }
+                            if(val['help_cat'] == 'OFFER_HELP'){
+                                res += '<td><span class="badge badge-success">Available</span></td>';
+                            }
+                            // res += '<td>'+val['help_cat']+'</td>';
 
                             res += '<td>';
                             for(var i=0; i<val['loc'].length; i++){
@@ -67,7 +75,7 @@
 
                             res += '<td>';
                             for(var i=0; i<val['nums'].length; i++){
-                                res += '<span class="badge badge-success">'+val['nums'][i]+'</span>';
+                                res += '<span class="badge badge-primary">'+val['nums'][i]+'</span>';
                             }
                             res += '</td>';
                             
@@ -92,16 +100,17 @@
                     <br>
                     <button id="query_btn" class="btn btn-outline-success my-2 my-sm-0" >Search</button>
                     <br>
+                    <br>
                     <div class="row">
 
                         <div class="col-6">
                             <div class="custom-control custom-checkbox ">
                                 <input type="checkbox" class="custom-control-input helpcatcb" id="cb_hc_nh" value="NEED_HELP">
-                                <label class="custom-control-label" for="cb_hc_nh">NEED_HELP</label>
+                                <label class="custom-control-label" for="cb_hc_nh"><span class="badge badge-danger">SOS</span></label>
                             </div>
                             <div class="custom-control custom-checkbox ">
                                 <input type="checkbox" class="custom-control-input helpcatcb" id="cb_hc_oh" value="OFFER_HELP"> 
-                                <label class="custom-control-label" for="cb_hc_oh">OFFER_HELP</label>
+                                <label class="custom-control-label" for="cb_hc_oh"><span class="badge badge-success">Available</span></label>
                             </div>
                         </div>
 
