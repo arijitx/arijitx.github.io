@@ -1,0 +1,164 @@
+
+
+
+
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/realm-web@1.2.0/dist/bundle.iife.js"></script>
+    </head>
+    <body>
+        <script>
+            const id = "serve-ceoiz";
+            var user_x = '';
+            const config = {
+                id,
+            };
+            const app = new Realm.App(config);
+            function loginAnonymous() {
+            // Create an anonymous credential
+                const credentials = Realm.Credentials.anonymous();
+                try {
+                    // Authenticate the user
+                    const user = app.logIn(credentials);
+                    // `App.currentUser` updates to match the logged in user
+                    // assert(user.id === app.currentUser.id)
+                    return user
+                } catch(err) {
+                    console.error("Failed to log in", err);
+                }
+            }
+            loginAnonymous().then(user => {
+                user_x = user;
+                console.log("Successfully logged in!", user);
+            })
+            $( document ).ready(function() {
+                $("#query_btn").click(function(){
+                    var help_cat = [];
+                    var help_type = [];
+                    
+                    $('input.helpcatcb:checkbox:checked').each(function () {
+                        help_cat.push($(this).val());
+                    });
+                    $('input.helptypecb:checkbox:checked').each(function () {
+                        help_type.push($(this).val());
+                    });
+
+                    console.log(help_type);
+
+                    user_x.functions.search($("#query").val(),0,help_cat,help_type).then(result => {
+                        var res = '';
+                        $.each(result,function(index,val){
+                            
+                            res += '<tr><td>'+val['tid']+'</td>';
+                            res += '<td>'+val['time']+'</td>';
+                            res += '<td>'+val['text']+'</td>';
+                            res += '<td>'+val['help_type']+'</td>';
+                            res += '<td>'+val['help_cat']+'</td>';
+
+                            res += '<td>';
+                            for(var i=0; i<val['loc'].length; i++){
+                                res += val['loc'][i]+",";
+                            }
+                            res += '</td>';
+
+                            res += '<td>';
+                            for(var i=0; i<val['nums'].length; i++){
+                                res += '<span class="badge badge-success">'+val['nums'][i]+'</span>';
+                            }
+                            res += '</td>';
+                            
+                        });
+                        $("#result_table").html(res);
+                    });
+                });
+            });
+        </script>
+
+        <div class="container">
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-8">COVID RESOURCE SEARCH</div>
+                <div class="col"></div>
+            </div>
+            <br><br>
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-12">
+                    <input id="query" type="text" class="form-control" placeholder="oxygen beds in Kolkata" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <br>
+                    <button id="query_btn" class="btn btn-outline-success my-2 my-sm-0" >Search</button>
+                    <br>
+                    <div class="row">
+
+                        <div class="col-6">
+                            <div class="custom-control custom-checkbox ">
+                                <input type="checkbox" class="custom-control-input helpcatcb" id="cb_hc_nh" value="NEED_HELP">
+                                <label class="custom-control-label" for="cb_hc_nh">NEED_HELP</label>
+                            </div>
+                            <div class="custom-control custom-checkbox ">
+                                <input type="checkbox" class="custom-control-input helpcatcb" id="cb_hc_oh" value="OFFER_HELP"> 
+                                <label class="custom-control-label" for="cb_hc_oh">OFFER_HELP</label>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="custom-control custom-checkbox ">
+                                <input type="checkbox" class="custom-control-input helptypecb" id="cb_ht_oc" value="OXYGEN">
+                                <label class="custom-control-label" for="cb_ht_oc">OXYGEN</label>
+                            </div>
+                            <div class="custom-control custom-checkbox ">
+                                <input type="checkbox" class="custom-control-input helptypecb" id="cb_ht_ob" value="OXYGEN_BED">
+                                <label class="custom-control-label" for="cb_ht_ob">OXYGEN_BED</label>
+                            </div>
+                            <div class="custom-control custom-checkbox ">
+                                <input type="checkbox" class="custom-control-input helptypecb" id="cb_ht_ic" value="ICU_BED">
+                                <label class="custom-control-label" for="cb_ht_ic">ICU_BED</label>
+                            </div>
+                            <div class="custom-control custom-checkbox ">
+                                <input type="checkbox" class="custom-control-input helptypecb" id="cb_ht_bl" value="BLOOD">
+                                <label class="custom-control-label" for="cb_ht_bl">BLOOD</label>
+                            </div>
+                            <div class="custom-control custom-checkbox ">
+                                <input type="checkbox" class="custom-control-input helptypecb" id="cb_ht_me" value="MEDICINE">
+                                <label class="custom-control-label" for="cb_ht_me">MEDICINE</label>
+                            </div>
+                            <div class="custom-control custom-checkbox ">
+                                <input type="checkbox" class="custom-control-input helptypecb" id="cb_ht_ot" value="OTHER">
+                                <label class="custom-control-label" for="cb_ht_ot">OTHER</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br><br><br><br>
+                    <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">tid</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Text</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Contacts</th>
+                          </tr>
+                        </thead>
+                        <tbody id="result_table">
+                          <!-- <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                          </tr> -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col"></div>
+              </div>
+              <div class="row"></div>
+        </div>
+    </body>
+</html>
